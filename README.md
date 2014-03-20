@@ -5,7 +5,8 @@ Display esri.symbol.SimpleFillSymbol fill patterns with the color defined instea
 
 Just include the JS file and proceed as usual with the [simple fill symbol](https://developers.arcgis.com/javascript/jsapi/simplefillsymbol-amd.html)
 
-`<!DOCTYPE html>
+```HTML
+<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -38,4 +39,5 @@ Just include the JS file and proceed as usual with the [simple fill symbol](http
 <body>
 	<div id="map"></div>
 </body>
-</html>`
+</html>
+```
