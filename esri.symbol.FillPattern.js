@@ -174,4 +174,4 @@ require(["esri/symbols/SimpleFillSymbol"], function(sfs)
 			}
 		}
 	}
-}
+});
