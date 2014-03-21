@@ -5,6 +5,14 @@ Display esri.symbol.SimpleFillSymbol fill patterns with the color defined instea
 
 Just include the JS file and proceed as usual with the [simple fill symbol](https://developers.arcgis.com/javascript/jsapi/simplefillsymbol-amd.html)
 
+`new SimpleFillSymbol(SimpleFillSymbol.STYLE_CROSS, null, new Color([255, 0, 0]))`
+
+Browser compatibility : [data uri](http://caniuse.com/#feat=datauri)
+
+
+Example
+=======
+
 ```HTML
 <!DOCTYPE html>
 <html>
