@@ -10,7 +10,7 @@ require(["esri/symbols/SimpleFillSymbol"], function(sfs)
 			if( this.style != esri.symbol.SimpleFillSymbol.STYLE_NULL && 
 				this.style != esri.symbol.SimpleFillSymbol.STYLE_SOLID )
 			{
-				if( fill.src.indexOf('data:image/png;base64,') != 0 )
+				if( !fill.src || fill.src.indexOf('data:image/png;base64,') != 0 )
 					fill.src = 'data:image/png;base64,' + esri.symbol.FillPattern.generate(this.color, this.style);
 			}
 			
