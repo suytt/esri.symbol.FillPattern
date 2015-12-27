@@ -149,25 +149,41 @@ require(["esri/symbols/SimpleFillSymbol"], function(sfs)
 			// BASE64
 			// ==========================
 			this.BASE64_ENCODE_MAP = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-			this.base64 = function(hexArray)
+			this.base64 = function(input)
 			{
-				var dataLength = (hexArray.length * 4 + 2) / 3;
-				var outputLength = ((hexArray.length + 2) / 3) * 4;
 				var output = "";
 				var inputIndex = 0;
-				var outputIndex = 0;
 				
-				var i0, i1, i2;
-				while( inputIndex < hexArray.length )
+				var i0;
+				var limit = input.length - (input.length % 3);
+				while( inputIndex < limit )
 				{
-					i0 = hexArray[inputIndex++] & 0xFF;
-					i1 = (inputIndex < hexArray.length ? hexArray[inputIndex++] & 0xFF : 0);
-					i2 = (inputIndex < hexArray.length ? hexArray[inputIndex++] & 0xFF : 0);
+					i0 = (input[inputIndex++] & 0xff) << 16 | (input[inputIndex++] & 0xff) << 8 | (input[inputIndex++] & 0xff);
+					output += this.BASE64_ENCODE_MAP[(i0 >>> 18) & 0x3f];
+					output += this.BASE64_ENCODE_MAP[(i0 >>> 12) & 0x3f];
+					output += this.BASE64_ENCODE_MAP[(i0 >>> 6) & 0x3f];
+					output += this.BASE64_ENCODE_MAP[i0 & 0x3f];
+				}
+				
+				// padding
+				if( inputIndex < input.length )
+				{
+					i0 = input[inputIndex++] & 0xff;
+					output += this.BASE64_ENCODE_MAP[i0 >> 2];
 					
-					output += this.BASE64_ENCODE_MAP[i0 >>> 2];
-					output += this.BASE64_ENCODE_MAP[((i0 & 3) << 4) | (i1 >>> 4)];
-					output += (output.length < dataLength ? this.BASE64_ENCODE_MAP[((i1 & 0xF) << 2) | (i2 >>> 6)] : '=');
-					output += (output.length < dataLength ? this.BASE64_ENCODE_MAP[i2 & 0x3F] : '=');
+					if( inputIndex < input.length )
+					{
+						var i1 = input[inputIndex++] & 0xff;
+						output += this.BASE64_ENCODE_MAP[(i0 << 4) & 0x3f | (i1 >> 4)];
+						output += this.BASE64_ENCODE_MAP[(i1 << 2) & 0x3f];
+					}
+					else
+					{
+						output += this.BASE64_ENCODE_MAP[(i0 << 4) & 0x3f];
+						output += '=';
+					}
+					
+					output += '=';
 				}
 				
 				return output;
